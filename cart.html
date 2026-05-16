@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - ANS Essence</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+
+    <h1>ANS Essence</h1>
+
+    <ul>
+
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="products.html">Products</a></li>
+
+        <li><a href="cart.html">Cart</a></li>
+
+        <li><a href="contact.html">Contact</a></li>
+
+    </ul>
+
+</nav>
+
+<section class="cart">
+
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+
+    <div class="bill-box">
+
+    <p>Products Price: Rs.<span id="product-price">0</span></p>
+
+    <p>Shipping Fee: Rs.<span id="shipping">200</span></p>
+
+    <h3>Total: Rs.<span id="final-total">0</span></h3>
+
+</div>
+
+<div class="address-box">
+
+    <h2>Shipping Address</h2>
+
+    <button id="open-address">
+
+    Add Address
+
+</button>
+
+</div>
+
+<button id="order-btn">Place Order</button>
+
+</section>
+
+<div class="address-popup" id="address-popup">
+
+    <div class="popup-content">
+
+        <span id="close-popup">&times;</span>
+
+        <h2>Add Shipping Address</h2>
+
+        <form class="address-form">
+            <input type="text" id="fullname" placeholder="Enter Full Name">
+
+<input type="text" id="phone" placeholder="Enter Phone Number">
+
+<input type="text" id="region" placeholder="Enter Region">
+
+<input type="text" id="district" placeholder="Enter District">
+
+<input type="text" id="city" placeholder="Enter City">
+
+<textarea id="address" placeholder="Enter Full Address"></textarea>
+
+           <button type="button" id="save-address">
+
+    Save Address
+
+</button>
+
+        </form>
+
+    </div>
+
+</div>
+<div id="popup"></div>
+
+<footer>
+
+    <p>© 2025 ANS Essence | All Rights Reserved</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

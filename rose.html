@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Elegance</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+
+    <h1>ANS Essence</h1>
+
+</nav>
+
+<section class="product-detail">
+
+    <div class="image-section">
+
+        <img src="roselyn.png" id="main-image" class="detail-image">
+
+        <div class="small-images">
+
+            <img src="roselyn.png" onclick="changeImage(this.src)">
+
+            <img src="rosebox.png" onclick="changeImage(this.src)">
+
+            <img src="rosehand.png" onclick="changeImage(this.src)">
+
+        </div>
+
+    </div>
+
+    <div class="detail-text">
+
+        <h2>Rose Elegance</h2>
+
+        <p>
+
+            Luxury floral perfume for women with long-lasting fragrance.
+
+        </p>
+
+        <h3>Rs.2500</h3>
+
+        <button>Add To Cart</button>
+
+    </div>
+
+</section>
+<section class="related-products">
+
+    <h2>Related Products</h2>
+
+    <div class="related-container">
+
+        <div class="related-card">
+
+            <img src="imgIntense.png">
+
+            <h3>Sweet Blossom</h3>
+
+            <p>Rs.2300</p>
+
+        </div>
+
+        <div class="related-card">
+
+            <img src="imgnoir.png">
+
+            <h3>Dark Oud</h3>
+
+            <p>Rs.3000</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+function changeImage(image){
+
+    document.getElementById("main-image").src = image;
+
+}
+
+</script>
+
+</body>
+</html>
