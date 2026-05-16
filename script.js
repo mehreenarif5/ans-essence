@@ -2,22 +2,20 @@ let popup = document.getElementById("popup");
 
 function showPopup(message){
 
-    if(popup){
+    popup.innerText = message;
 
-        popup.innerText = message;
+    popup.style.display = "block";
 
-        popup.style.display = "block";
+    setTimeout(() => {
 
-        setTimeout(() => {
+        popup.style.display = "none";
 
-            popup.style.display = "none";
-
-        },2000);
-
-    }
+    },2000);
 
 }
 
+
+// CART
 let cartItems = document.getElementById("cart-items");
 
 let productPrice = document.getElementById("product-price");
@@ -50,11 +48,7 @@ function updateBill(){
 // SAVE CART
 function saveCart(){
 
-    if(cartItems){
-
-        localStorage.setItem("cartData", cartItems.innerHTML);
-
-    }
+    localStorage.setItem("cartData", cartItems.innerHTML);
 
     localStorage.setItem("cartTotal", total);
 
@@ -88,7 +82,7 @@ buttons.forEach(button => {
 
         let name = card.querySelector("h3").innerText;
 
-        let priceText = card.querySelector("p").innerText;
+        let priceText = card.querySelector(".price").innerText;
 
         let image = card.querySelector("img").src;
 
@@ -96,31 +90,35 @@ buttons.forEach(button => {
 
         total += price;
 
-        let item = document.createElement("div");
+        let item = `
 
-        item.classList.add("cart-item");
+        <div class="cart-item">
 
-        item.innerHTML = `
+            <img src="${image}" class="cart-image">
 
-        <img src="${image}" class="cart-image">
+            <h3>${name}</h3>
 
-        <h3>${name}</h3>
+            <p class="item-price">${price}</p>
 
-        <p class="item-price">${price}</p>
+            <div class="quantity-box">
 
-        <button class="minus-btn">-</button>
+                <button class="minus-btn">-</button>
 
-        <span class="qty">1</span>
+                <span class="qty">1</span>
 
-        <button class="plus-btn">+</button>
+                <button class="plus-btn">+</button>
 
-        <button class="remove-btn">Remove</button>
+            </div>
+
+            <button class="remove-btn">Remove</button>
+
+        </div>
 
         `;
 
         let currentCart = localStorage.getItem("cartData") || "";
 
-        currentCart += item.outerHTML;
+        currentCart += item;
 
         localStorage.setItem("cartData", currentCart);
 
@@ -133,7 +131,7 @@ buttons.forEach(button => {
 });
 
 
-// ATTACH CART EVENTS
+// CART EVENTS
 function attachCartEvents(){
 
     let items = document.querySelectorAll(".cart-item");
@@ -235,113 +233,6 @@ if(search){
         });
 
     });
-
-}
-
-
-// ADDRESS POPUP
-let openAddress = document.getElementById("open-address");
-
-let addressPopup = document.getElementById("address-popup");
-
-let closePopup = document.getElementById("close-popup");
-
-if(openAddress){
-
-    openAddress.onclick = function(){
-
-        addressPopup.style.display = "flex";
-
-    };
-
-}
-
-if(closePopup){
-
-    closePopup.onclick = function(){
-
-        addressPopup.style.display = "none";
-
-    };
-
-}
-
-
-// SAVE ADDRESS
-let addressSaved = localStorage.getItem("addressSaved") || false;
-
-let saveAddress = document.getElementById("save-address");
-
-if(saveAddress){
-
-    saveAddress.onclick = function(){
-
-        let fullname = document.getElementById("fullname").value;
-
-        let phone = document.getElementById("phone").value;
-
-        let city = document.getElementById("city").value;
-
-        let address = document.getElementById("address").value;
-
-
-        if(fullname == "" || phone == "" || city == "" || address == ""){
-
-            showPopup("Please Fill All Fields");
-
-            return;
-
-        }
-
-        if(phone.length != 11){
-
-            showPopup("Phone Number Must Be 11 Digits");
-
-            return;
-
-        }
-
-        addressSaved = true;
-
-        localStorage.setItem("addressSaved", true);
-
-        addressPopup.style.display = "none";
-
-        showPopup("Address Saved Successfully 😍");
-
-    };
-
-}
-
-
-// PLACE ORDER
-let orderBtn = document.getElementById("order-btn");
-
-if(orderBtn){
-
-    orderBtn.onclick = function(){
-
-        let savedCart = localStorage.getItem("cartData");
-
-        if(savedCart == "" || savedCart == null){
-
-            showPopup("Your Cart Is Empty ❌");
-
-            return;
-
-        }
-
-        if(addressSaved == false){
-
-            showPopup("Please Add Address First 📍");
-
-            return;
-
-        }
-
-        showPopup("Your Order Has Been Placed 😍");
-
-    };
 
 }
 
