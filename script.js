@@ -1,6 +1,3 @@
-# Replace Your Entire script.js With This Code
-
-```javascript
 let popup = document.getElementById("popup");
 
 function showPopup(message){
@@ -11,7 +8,7 @@ function showPopup(message){
 
         popup.style.display = "block";
 
-        setTimeout(function(){
+        setTimeout(() => {
 
             popup.style.display = "none";
 
@@ -21,7 +18,6 @@ function showPopup(message){
 
 }
 
-
 let cartItems = document.getElementById("cart-items");
 
 let productPrice = document.getElementById("product-price");
@@ -30,7 +26,39 @@ let finalTotal = document.getElementById("final-total");
 
 let shipping = 200;
 
-let total = 0;
+let total = parseInt(localStorage.getItem("cartTotal")) || 0;
+
+
+// UPDATE BILL
+function updateBill(){
+
+    if(productPrice){
+
+        productPrice.innerText = total;
+
+    }
+
+    if(finalTotal){
+
+        finalTotal.innerText = total + shipping;
+
+    }
+
+}
+
+
+// SAVE CART
+function saveCart(){
+
+    if(cartItems){
+
+        localStorage.setItem("cartData", cartItems.innerHTML);
+
+    }
+
+    localStorage.setItem("cartTotal", total);
+
+}
 
 
 // LOAD CART
@@ -40,11 +68,9 @@ window.addEventListener("load", function(){
 
         cartItems.innerHTML = localStorage.getItem("cartData") || "";
 
-        total = parseInt(localStorage.getItem("cartTotal")) || 0;
+        attachCartEvents();
 
         updateBill();
-
-        attachCartEvents();
 
     }
 
@@ -54,7 +80,7 @@ window.addEventListener("load", function(){
 // ADD TO CART
 let buttons = document.querySelectorAll(".card button");
 
-buttons.forEach(function(button){
+buttons.forEach(button => {
 
     button.addEventListener("click", function(){
 
@@ -92,7 +118,6 @@ buttons.forEach(function(button){
 
         `;
 
-
         let currentCart = localStorage.getItem("cartData") || "";
 
         currentCart += item.outerHTML;
@@ -108,12 +133,12 @@ buttons.forEach(function(button){
 });
 
 
-// CART EVENTS
+// ATTACH CART EVENTS
 function attachCartEvents(){
 
     let items = document.querySelectorAll(".cart-item");
 
-    items.forEach(function(item){
+    items.forEach(item => {
 
         let plusBtn = item.querySelector(".plus-btn");
 
@@ -128,7 +153,6 @@ function attachCartEvents(){
         let quantity = parseInt(qty.innerText);
 
 
-        // PLUS
         plusBtn.onclick = function(){
 
             quantity++;
@@ -144,7 +168,6 @@ function attachCartEvents(){
         };
 
 
-        // MINUS
         minusBtn.onclick = function(){
 
             if(quantity > 1){
@@ -164,7 +187,6 @@ function attachCartEvents(){
         };
 
 
-        // REMOVE
         removeBtn.onclick = function(){
 
             total -= price * quantity;
@@ -184,38 +206,6 @@ function attachCartEvents(){
 }
 
 
-// SAVE CART
-function saveCart(){
-
-    if(cartItems){
-
-        localStorage.setItem("cartData", cartItems.innerHTML);
-
-    }
-
-    localStorage.setItem("cartTotal", total);
-
-}
-
-
-// UPDATE BILL
-function updateBill(){
-
-    if(productPrice){
-
-        productPrice.innerText = total;
-
-    }
-
-    if(finalTotal){
-
-        finalTotal.innerText = total + shipping;
-
-    }
-
-}
-
-
 // SEARCH
 let search = document.getElementById("search");
 
@@ -227,7 +217,7 @@ if(search){
 
         let cards = document.querySelectorAll(".card");
 
-        cards.forEach(function(card){
+        cards.forEach(card => {
 
             let title = card.querySelector("h3").innerText.toLowerCase();
 
@@ -280,11 +270,11 @@ if(closePopup){
 // SAVE ADDRESS
 let addressSaved = localStorage.getItem("addressSaved") || false;
 
-let saveAddressBtn = document.getElementById("save-address");
+let saveAddress = document.getElementById("save-address");
 
-if(saveAddressBtn){
+if(saveAddress){
 
-    saveAddressBtn.onclick = function(){
+    saveAddress.onclick = function(){
 
         let fullname = document.getElementById("fullname").value;
 
@@ -303,7 +293,6 @@ if(saveAddressBtn){
 
         }
 
-
         if(phone.length != 11){
 
             showPopup("Phone Number Must Be 11 Digits");
@@ -312,6 +301,7 @@ if(saveAddressBtn){
 
         }
 
+        addressSaved = true;
 
         localStorage.setItem("addressSaved", true);
 
@@ -333,9 +323,6 @@ if(orderBtn){
 
         let savedCart = localStorage.getItem("cartData");
 
-        let savedAddress = localStorage.getItem("addressSaved");
-
-
         if(savedCart == "" || savedCart == null){
 
             showPopup("Your Cart Is Empty ❌");
@@ -344,15 +331,13 @@ if(orderBtn){
 
         }
 
-
-        if(savedAddress != "true"){
+        if(addressSaved == false){
 
             showPopup("Please Add Address First 📍");
 
             return;
 
         }
-
 
         showPopup("Your Order Has Been Placed 😍");
 
@@ -361,7 +346,7 @@ if(orderBtn){
 }
 
 
-// SIDEBAR MENU
+// SIDEBAR
 let menuIcon = document.getElementById("menu-icon");
 
 let sidebar = document.getElementById("sidebar");
@@ -375,5 +360,3 @@ if(menuIcon){
     };
 
 }
-
- 
