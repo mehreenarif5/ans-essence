@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="auth-box">
+
+<h2>My Account</h2>
+
+<h3 id="user-name"></h3>
+
+<p id="user-email"></p>
+
+<p id="user-phone"></p>
+
+<button id="logout-btn">Logout</button>
+
+</section>
+
+<script>
+
+document.getElementById("user-name").innerText =
+localStorage.getItem("userName");
+
+document.getElementById("user-email").innerText =
+localStorage.getItem("userEmail");
+
+document.getElementById("user-phone").innerText =
+localStorage.getItem("userPhone");
+
+document.getElementById("logout-btn").onclick = function(){
+
+localStorage.removeItem("userName");
+localStorage.removeItem("userEmail");
+localStorage.removeItem("userPhone");
+localStorage.removeItem("userPassword");
+
+window.location.href = "login.html";
+
+};
+
+</script>
+
+</body>
+</html>
