@@ -2,15 +2,19 @@ let popup = document.getElementById("popup");
 
 function showPopup(message){
 
-    popup.innerText = message;
+if(popup){
 
-    popup.style.display = "block";
+popup.innerText = message;
 
-    setTimeout(() => {
+popup.style.display = "block";
 
-        popup.style.display = "none";
+setTimeout(function(){
 
-    },2000);
+popup.style.display = "none";
+
+},2000);
+
+}
 
 }
 
@@ -30,17 +34,17 @@ let total = parseInt(localStorage.getItem("cartTotal")) || 0;
 // UPDATE BILL
 function updateBill(){
 
-    if(productPrice){
+if(productPrice){
 
-        productPrice.innerText = total;
+productPrice.innerText = total;
 
-    }
+}
 
-    if(finalTotal){
+if(finalTotal){
 
-        finalTotal.innerText = total + shipping;
+finalTotal.innerText = total + shipping;
 
-    }
+}
 
 }
 
@@ -48,158 +52,159 @@ function updateBill(){
 // SAVE CART
 function saveCart(){
 
-    localStorage.setItem("cartData", cartItems.innerHTML);
+if(cartItems){
 
-    localStorage.setItem("cartTotal", total);
+localStorage.setItem("cartData", cartItems.innerHTML);
+
+}
+
+localStorage.setItem("cartTotal", total);
 
 }
 
 
 // LOAD CART
-window.addEventListener("load", function(){
+window.onload = function(){
 
-    if(cartItems){
+if(cartItems){
 
-        cartItems.innerHTML = localStorage.getItem("cartData") || "";
+cartItems.innerHTML = localStorage.getItem("cartData") || "";
 
-        attachCartEvents();
+attachCartEvents();
 
-        updateBill();
+updateBill();
 
-    }
+}
 
-});
+};
 
 
 // ADD TO CART
 let buttons = document.querySelectorAll(".card button");
 
-buttons.forEach(button => {
+buttons.forEach(function(button){
 
-    button.addEventListener("click", function(){
+button.onclick = function(){
 
-        let card = button.parentElement;
+let card = button.parentElement;
 
-        let name = card.querySelector("h3").innerText;
+let name = card.querySelector("h3").innerText;
 
-        let priceText = card.querySelector(".price").innerText;
+let price = parseInt(card.querySelector(".price").innerText.replace("Rs.",""));
 
-        let image = card.querySelector("img").src;
+let image = card.querySelector("img").src;
 
-        let price = parseInt(priceText.replace("Rs.",""));
+total += price;
 
-        total += price;
+let item = document.createElement("div");
 
-        let item = `
+item.classList.add("cart-item");
 
-        <div class="cart-item">
+item.innerHTML = `
 
-            <img src="${image}" class="cart-image">
+<img src="${image}" class="cart-image">
 
-            <h3>${name}</h3>
+<h3>${name}</h3>
 
-            <p class="item-price">${price}</p>
+<p class="item-price">${price}</p>
 
-            <div class="quantity-box">
+<button class="minus-btn">-</button>
 
-                <button class="minus-btn">-</button>
+<span class="qty">1</span>
 
-                <span class="qty">1</span>
+<button class="plus-btn">+</button>
 
-                <button class="plus-btn">+</button>
+<button class="remove-btn">Remove</button>
 
-            </div>
+`;
 
-            <button class="remove-btn">Remove</button>
+let currentCart = localStorage.getItem("cartData") || "";
 
-        </div>
+currentCart += item.outerHTML;
 
-        `;
+localStorage.setItem("cartData", currentCart);
 
-        let currentCart = localStorage.getItem("cartData") || "";
+localStorage.setItem("cartTotal", total);
 
-        currentCart += item;
+showPopup("Added To Cart");
 
-        localStorage.setItem("cartData", currentCart);
-
-        localStorage.setItem("cartTotal", total);
-
-        showPopup("Product Added To Cart 🛒");
-
-    });
+};
 
 });
 
 
-// CART EVENTS
+// EVENTS
 function attachCartEvents(){
 
-    let items = document.querySelectorAll(".cart-item");
+let items = document.querySelectorAll(".cart-item");
 
-    items.forEach(item => {
+items.forEach(function(item){
 
-        let plusBtn = item.querySelector(".plus-btn");
+let plusBtn = item.querySelector(".plus-btn");
 
-        let minusBtn = item.querySelector(".minus-btn");
+let minusBtn = item.querySelector(".minus-btn");
 
-        let removeBtn = item.querySelector(".remove-btn");
+let removeBtn = item.querySelector(".remove-btn");
 
-        let qty = item.querySelector(".qty");
+let qty = item.querySelector(".qty");
 
-        let price = parseInt(item.querySelector(".item-price").innerText);
+let price = parseInt(item.querySelector(".item-price").innerText);
 
-        let quantity = parseInt(qty.innerText);
-
-
-        plusBtn.onclick = function(){
-
-            quantity++;
-
-            qty.innerText = quantity;
-
-            total += price;
-
-            updateBill();
-
-            saveCart();
-
-        };
+let quantity = parseInt(qty.innerText);
 
 
-        minusBtn.onclick = function(){
+// PLUS
+plusBtn.onclick = function(){
 
-            if(quantity > 1){
+quantity++;
 
-                quantity--;
+qty.innerText = quantity;
 
-                qty.innerText = quantity;
+total += price;
 
-                total -= price;
+updateBill();
 
-                updateBill();
+saveCart();
 
-                saveCart();
-
-            }
-
-        };
+};
 
 
-        removeBtn.onclick = function(){
+// MINUS
+minusBtn.onclick = function(){
 
-            total -= price * quantity;
+if(quantity > 1){
 
-            item.remove();
+quantity--;
 
-            updateBill();
+qty.innerText = quantity;
 
-            saveCart();
+total -= price;
 
-            showPopup("Product Removed ❌");
+updateBill();
 
-        };
+saveCart();
 
-    });
+}
+
+};
+
+
+// REMOVE
+removeBtn.onclick = function(){
+
+total -= price * quantity;
+
+item.remove();
+
+updateBill();
+
+saveCart();
+
+showPopup("Removed");
+
+};
+
+});
 
 }
 
@@ -209,30 +214,30 @@ let search = document.getElementById("search");
 
 if(search){
 
-    search.addEventListener("keyup", function(){
+search.addEventListener("keyup", function(){
 
-        let value = search.value.toLowerCase();
+let value = search.value.toLowerCase();
 
-        let cards = document.querySelectorAll(".card");
+let cards = document.querySelectorAll(".card");
 
-        cards.forEach(card => {
+cards.forEach(function(card){
 
-            let title = card.querySelector("h3").innerText.toLowerCase();
+let title = card.querySelector("h3").innerText.toLowerCase();
 
-            if(title.includes(value)){
+if(title.includes(value)){
 
-                card.style.display = "block";
+card.style.display = "block";
 
-            }
-            else{
+}
+else{
 
-                card.style.display = "none";
+card.style.display = "none";
 
-            }
+}
 
-        });
+});
 
-    });
+});
 
 }
 
@@ -244,10 +249,170 @@ let sidebar = document.getElementById("sidebar");
 
 if(menuIcon){
 
-    menuIcon.onclick = function(){
+menuIcon.onclick = function(){
 
-        sidebar.classList.toggle("active");
+sidebar.classList.toggle("active");
 
-    };
+};   
+
+}
+
+
+//open-addressADDRESS
+let openAddress = document.getElementById("open-address");
+
+let addressPopup = document.getElementById("address-popup");
+
+let closePopup = document.getElementById("close-popup");
+
+if(openAddress){
+
+openAddress.onclick = function(){
+
+addressPopup.style.display = "flex";
+
+};
+
+}
+
+if(closePopup){
+
+closePopup.onclick = function(){
+
+addressPopup.style.display = "none";
+
+};
+
+}
+
+
+// SAVE ADDRESS
+let saveAddress = document.getElementById("save-address");
+
+if(saveAddress){
+
+saveAddress.onclick = function(){
+
+let fullname = document.getElementById("fullname").value;
+
+let phone = document.getElementById("phone").value;
+
+let city = document.getElementById("city").value;
+
+let address = document.getElementById("address").value;
+
+if(fullname == "" || phone == "" || city == "" || address == ""){
+
+showPopup("Fill All Fields");
+
+return;
+
+}
+
+localStorage.setItem("savedAddress", address);
+
+showPopup("Address Saved");
+
+addressPopup.style.display = "none";
+
+};
+
+}
+
+
+// PLACE ORDER
+let orderBtn = document.getElementById("order-btn");
+
+if(orderBtn){
+
+orderBtn.onclick = function(){
+
+let savedCart = localStorage.getItem("cartData");
+
+let savedAddress = localStorage.getItem("savedAddress");
+
+if(savedCart == "" || savedCart == null){
+
+showPopup("Cart Empty");
+
+return;
+
+}
+
+if(savedAddress == null){
+
+showPopup("Add Address");
+
+return;
+
+}
+
+showPopup("Order Placed");
+
+};
+
+}
+
+
+// SIGNUP
+let signupBtn = document.getElementById("signup-btn");
+let phone = document.getElementById("signup-phone").value;
+
+if(signupBtn)
+
+signupBtn.onclick = function(){
+
+let name = document.getElementById("signup-name").value;
+
+let email = document.getElementById("signup-email").value;
+
+let password = document.getElementById("signup-password").value;
+if(name == "" || email == "" || phone == "" || password == ""){
+
+localStorage.setItem("userName", name);
+
+localStorage.setItem("userEmail", email);
+localStorage.setItem("userPhone", phone);
+
+localStorage.setItem("userPassword", password);
+
+alert("Signup Successful");
+
+window.location.href = "login.html";
+
+};
+
+}
+
+
+// LOGIN
+let loginBtn = document.getElementById("login-btn");
+
+if(loginBtn){
+
+loginBtn.onclick = function(){
+
+let email = document.getElementById("login-email").value;
+
+let password = document.getElementById("login-password").value;
+
+let savedEmail = localStorage.getItem("userEmail");
+
+let savedPassword = localStorage.getItem("userPassword");
+
+if(email == savedEmail && password == savedPassword){
+
+alert("Login Successful");
+
+window.location.href = "index.html";
+
+}
+else{
+
+alert("Wrong Email Or Password");
+
+}
+
+};
 
 }
