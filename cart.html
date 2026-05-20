@@ -1,103 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - ANS Essence</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <nav>
 
-    <h1>ANS Essence</h1>
+<h1>ANS Essence</h1>
 
-    <ul>
-
-        <li><a href="index.html">Home</a></li>
-
-        <li><a href="products.html">Products</a></li>
-
-        <li><a href="cart.html">Cart</a></li>
-
-        <li><a href="contact.html">Contact</a></li>
-
-    </ul>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="cart.html">Cart</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
 
 </nav>
 
 <section class="cart">
 
-    <h2>Shopping Cart</h2>
-    <div id="cart-items"></div>
+<h2>Shopping Cart</h2>
 
-    <div class="bill-box">
+<div id="cart-items"></div>
 
-    <p>Products Price: Rs.<span id="product-price">0</span></p>
+<div class="bill-box">
 
-    <p>Shipping Fee: Rs.<span id="shipping">200</span></p>
+<p>Products Price: Rs.<span id="product-price">0</span></p>
 
-    <h3>Total: Rs.<span id="final-total">0</span></h3>
+<p>Shipping Fee: Rs.200</p>
+
+<h3>Total: Rs.<span id="final-total">0</span></h3>
 
 </div>
 
 <div class="address-box">
 
-    <h2>Shipping Address</h2>
-
-    <button id="open-address">
-
-    Add Address
-
-</button>
+<button id="open-address">Add Address</button>
 
 </div>
 
-<button id="order-btn">Place Order</button>
+<div class="cart-buttons">
+
+<button id="checkout-btn">
+Checkout
+</button>
+
+<button id="order-btn">
+Place Order
+</button>
+
+</div>
 
 </section>
 
 <div class="address-popup" id="address-popup">
 
-    <div class="popup-content">
+<div class="popup-content">
 
-        <span id="close-popup">&times;</span>
+<span id="close-popup">&times;</span>
 
-        <h2>Add Shipping Address</h2>
+<h2>Add Address</h2>
 
-        <form class="address-form">
-            <input type="text" id="fullname" placeholder="Enter Full Name">
+<input type="text" id="fullname" placeholder="Full Name">
 
-<input type="text" id="phone" placeholder="Enter Phone Number">
+<input type="text" id="phone" placeholder="Phone">
 
-<input type="text" id="region" placeholder="Enter Region">
+<input type="text" id="city" placeholder="City">
 
-<input type="text" id="district" placeholder="Enter District">
+<textarea id="address" placeholder="Address"></textarea>
 
-<input type="text" id="city" placeholder="Enter City">
-
-<textarea id="address" placeholder="Enter Full Address"></textarea>
-
-           <button type="button" id="save-address">
-
-    Save Address
-
-</button>
-
-        </form>
-
-    </div>
+<button id="save-address">Save Address</button>
 
 </div>
+
+</div>
+
 <div id="popup"></div>
+ <div class="bottom-nav">
 
-<footer>
+<a href="index.html" class="active">
+🏠
+<span>Home</span>
+</a>
 
-    <p>© 2025 ANS Essence | All Rights Reserved</p>
+<a href="products.html">
+🛍️
+<span>Products</span>
+</a>
 
-</footer>
+<a href="cart.html">
+🛒
+<span>Cart</span>
+</a>
 
+<a href="account.html">
+👤
+<span>Account</span>
+</a>
+
+</div>
 <script src="script.js"></script>
 
 </body>
